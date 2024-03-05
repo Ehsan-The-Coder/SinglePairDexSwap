@@ -38,6 +38,7 @@ async function swap(signerIndex) {
 }
 
 // Get the index from an environment variable
+//$env:signer="1"; yarn hardhat run .\scripts\DexSwap-AddLiquidity.js
 const index = process.env.signer;
 
 swap(index)

@@ -21,13 +21,13 @@ import {console} from "hardhat/console.sol";
  */
 contract DexSwap is ReentrancyGuard {
      //<----------------------------state variable---------------------------->
-     IERC20 public immutable i_token1;
-     IERC20 public immutable i_token2;
-     uint256 public s_reserve1;
-     uint256 public s_reserve2;
-     uint256 public s_totalLiquidity;
-     uint32 public constant SWAP_FEE_FRACTION = 997; // Fee for the swap operation, represented as a fraction over 1000.
-     mapping(address user => uint256 share) public s_userShare;
+     IERC20 private immutable i_token1;
+     IERC20 private immutable i_token2;
+     uint256 private s_reserve1;
+     uint256 private s_reserve2;
+     uint256 private s_totalLiquidity;
+     uint32 private constant SWAP_FEE_FRACTION = 997; // Fee for the swap operation, represented as a fraction over 1000.
+     mapping(address user => uint256 share) private s_userShare;
 
      //<----------------------------events---------------------------->
      /**
@@ -315,6 +315,34 @@ contract DexSwap is ReentrancyGuard {
           } else {
                amountOut = (s_reserve1 * amountIn) / s_reserve2;
           }
+     }
+
+     function getToken1() external view returns (IERC20) {
+          return i_token1;
+     }
+
+     function getToken2() external view returns (IERC20) {
+          return i_token2;
+     }
+
+     function getReserve1() external view returns (uint256) {
+          return s_reserve1;
+     }
+
+     function getReserve2() external view returns (uint256) {
+          return s_reserve2;
+     }
+
+     function getTotalLiquidity() external view returns (uint256) {
+          return s_totalLiquidity;
+     }
+
+     function getSwapFeeFraction() external pure returns (uint32) {
+          return SWAP_FEE_FRACTION;
+     }
+
+     function getUserShare(address user) external view returns (uint256) {
+          return s_userShare[user];
      }
 
      //<----------------------------private functions---------------------------->

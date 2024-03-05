@@ -110,8 +110,8 @@ const { WeiPerEther } = require("ethers");
             });
             describe("constructor", function () {
                  it("sets the token addresses correctly", async function () {
-                      const token1 = await DexSwap.i_token1();
-                      const token2 = await DexSwap.i_token2();
+                      const token1 = await DexSwap.getToken1();
+                      const token2 = await DexSwap.getToken2();
                       assert.equal(token1, Token1.target);
                       assert.equal(token2, Token2.target);
                  });
@@ -323,11 +323,11 @@ const { WeiPerEther } = require("ethers");
                                 expReseve2,
                            );
                       //final values
-                      const finalReseve1 = await DexSwap.s_reserve1();
-                      const finalReseve2 = await DexSwap.s_reserve2();
+                      const finalReseve1 = await DexSwap.getReserve1();
+                      const finalReseve2 = await DexSwap.getReserve2();
                       const finalTotalLiquidity =
-                           await DexSwap.s_totalLiquidity();
-                      const finalUserShare = await DexSwap.s_userShare(
+                           await DexSwap.getTotalLiquidity();
+                      const finalUserShare = await DexSwap.getUserShare(
                            deployer.address,
                       );
                       assert.equal(expReseve1, finalReseve1);
@@ -380,10 +380,6 @@ const { WeiPerEther } = require("ethers");
                                 const expReseve2 = BigInt(
                                      amount2Passed + reserve2,
                                 );
-                                //   min(
-                                //        (amoutToken1 * s_totalLiquidity) / s_reserve1,
-                                //        (amoutToken2 * s_totalLiquidity) / s_reserve2,
-                                //   );
                                 const R1 = BigInt(
                                      (amount1Passed * totalLiquidity) /
                                           reserve1,
@@ -431,12 +427,14 @@ const { WeiPerEther } = require("ethers");
 
                                 //final values
 
-                                const finalReseve1 = await DexSwap.s_reserve1();
-                                const finalReseve2 = await DexSwap.s_reserve2();
+                                const finalReseve1 =
+                                     await DexSwap.getReserve1();
+                                const finalReseve2 =
+                                     await DexSwap.getReserve2();
                                 const finalTotalLiquidity =
-                                     await DexSwap.s_totalLiquidity();
+                                     await DexSwap.getTotalLiquidity();
                                 const finalUserShare =
-                                     await DexSwap.s_userShare(
+                                     await DexSwap.getUserShare(
                                           deployer.address,
                                      );
 
@@ -587,8 +585,8 @@ const { WeiPerEther } = require("ethers");
                            reserve1 += amountToSwap;
                            reserve2 -= expAmountOut;
 
-                           assert.equal(reserve1, await DexSwap.s_reserve1());
-                           assert.equal(reserve2, await DexSwap.s_reserve2());
+                           assert.equal(reserve1, await DexSwap.getReserve1());
+                           assert.equal(reserve2, await DexSwap.getReserve2());
                       }
                  });
                  it("swap the assest by passing token2", async function () {
@@ -617,8 +615,8 @@ const { WeiPerEther } = require("ethers");
                            reserve2 += amountToSwap;
                            reserve1 -= expAmountOut;
 
-                           assert.equal(reserve1, await DexSwap.s_reserve1());
-                           assert.equal(reserve2, await DexSwap.s_reserve2());
+                           assert.equal(reserve1, await DexSwap.getReserve1());
+                           assert.equal(reserve2, await DexSwap.getReserve2());
                       }
                  });
             });
@@ -690,13 +688,13 @@ const { WeiPerEther } = require("ethers");
 
                                      //final values
                                      const finalReseve1 =
-                                          await DexSwap.s_reserve1();
+                                          await DexSwap.getReserve1();
                                      const finalReseve2 =
-                                          await DexSwap.s_reserve2();
+                                          await DexSwap.getReserve2();
                                      const finalTotalLiquidity =
-                                          await DexSwap.s_totalLiquidity();
+                                          await DexSwap.getTotalLiquidity();
                                      const finalUserShare =
-                                          await DexSwap.s_userShare(
+                                          await DexSwap.getUserShare(
                                                deployer.address,
                                           );
                                      assert.equal(expReseve1, finalReseve1);

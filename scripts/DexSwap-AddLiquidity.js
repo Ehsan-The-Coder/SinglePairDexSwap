@@ -23,7 +23,7 @@ async function AddLiquidity(signerIndex) {
 
      console.log(`Detail of reserve(s) before adding liquidity...`);
      let totalLiquidity = (await getReserve()).totalLiquidity;
-     let userShare = await DexSwap.s_userShare(signer.address);
+     let userShare = await DexSwap.getUserShare(signer.address);
      console.log(`User Share[${signer.address}]: `, userShare);
 
      if (totalLiquidity > 0) {
@@ -33,11 +33,12 @@ async function AddLiquidity(signerIndex) {
 
      console.log(`Detail of reserve(s) after adding liquidity...`);
      await getReserve();
-     userShare = await DexSwap.s_userShare(signer.address);
+     userShare = await DexSwap.getUserShare(signer.address);
      console.log(`User Share[${signer.address}]: `, userShare);
 }
 
 // Get the index from an environment variable
+//$env:signer="1"; yarn hardhat run .\scripts\DexSwap-AddLiquidity.js --network localhost/ganache
 const index = process.env.signer;
 
 AddLiquidity(index)

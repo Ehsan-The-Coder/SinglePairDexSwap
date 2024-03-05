@@ -12,7 +12,7 @@ async function RemoveLiquidity(signerIndex) {
 
      console.log(`Detail of reserve(s) before removing liquidity...`);
      await getReserve();
-     let userShare = await DexSwap.s_userShare(signer.address);
+     let userShare = await DexSwap.getUserShare(signer.address);
      console.log(`User Share[${signer.address}]: `, userShare);
 
      await DexSwap.connect(signer).removeLiquidity();
@@ -22,6 +22,7 @@ async function RemoveLiquidity(signerIndex) {
 }
 
 // Get the index from an environment variable
+//$env:signer="1"; yarn hardhat run .\scripts\DexSwap-AddLiquidity.js
 const index = process.env.signer;
 
 RemoveLiquidity(index)
