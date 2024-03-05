@@ -53,7 +53,7 @@ Note: Please ensure that the contract is deployed on localhost/ganache/testnet a
 1. Add Liquidity:
 
      ```bash
-     $env:signer="0"; yarn hardhat run ./scripts/DexSwap-AddLiquidity.js --network localhost
+     $env:signer="0"; yarn hardhat run .\scripts\DexSwap-AddLiquidity.js --network localhost
      ```
 
 2. Swap Token1 or Token2 by selecting the file name:
